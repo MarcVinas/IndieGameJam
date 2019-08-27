@@ -8,6 +8,9 @@ public class CharacterController : MonoBehaviour {
     public GameObject prefab;
     public Transform shootPoint;
     public float bulletForce;
+    public GameObject cannon;
+
+    public float speed;
 
     //rotacion del cañon
     private float angle;
@@ -16,13 +19,23 @@ public class CharacterController : MonoBehaviour {
     {
         //determino la posicion del cursor
         Vector3 mouse = Input.mousePosition;
-        //Vector3 cannon = Camera.main.WorldToScreenPoint(this.transform.position);
         Ray ray = Camera.main.ScreenPointToRay(mouse);
+        RaycastHit hit;
 
+        float hitDist = 25;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            //Transform objectHit = hit.transform;
+            //Vector3 objectVec = hit.transform.position;
+            Vector3 targetPoint = ray.GetPoint(hitDist);
+            Quaternion cannonRotation = Quaternion.LookRotation(targetPoint - cannon.transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, cannonRotation, speed * Time.deltaTime);
+        }
 
         //el cañon rota segun la posicion del cursor
-        angle = Mathf.Atan2(mouse.y, mouse.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(-15, -angle, 0));
+        //angle = Mathf.Atan2(mouse.y, mouse.x) * Mathf.Rad2Deg;
+        
 
         //disparar
         if (Input.GetButtonDown("Fire1"))
