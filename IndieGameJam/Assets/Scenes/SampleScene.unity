@@ -167,6 +167,7 @@ MonoBehaviour:
   prefab: {fileID: 5841418617806219723, guid: 6cbe71b3deded8e43b0eeb1140c920b9, type: 3}
   shootPoint: {fileID: 988103852}
   bulletForce: 5000
+  timeToShoot: 0.5
   cannon: {fileID: 1786422079}
   speed: 10
 --- !u!1 &529365141
